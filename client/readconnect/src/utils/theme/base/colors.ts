@@ -25,6 +25,10 @@ const colors = {
     main: "#081329",
   },
 
+  green: {
+    main: "#50830F"
+  },
+
   blue: {
     main: "#3177c8",
   },

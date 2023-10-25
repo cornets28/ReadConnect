@@ -8,6 +8,8 @@ import { CacheProvider, EmotionCache } from '@emotion/react';
 import theme from '../utils/theme';
 import createEmotionCache from '../createEmotionCache';
 
+import Footer from '../components/layouts/Footer'
+
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
 
@@ -34,6 +36,7 @@ export default function MyApp(props: MyAppProps) {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Component {...pageProps} />
+        <Footer />
       </ThemeProvider>
     </CacheProvider>
   );
