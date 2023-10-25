@@ -1,6 +1,6 @@
 const colors = {
   primary: {
-    main: "#73735A",
+    main: "#50830F",
   },
 
   secondary: {
@@ -23,6 +23,10 @@ const colors = {
 
   darkBleu: {
     main: "#081329",
+  },
+
+  green: {
+    main: "#50830F"
   },
 
   blue: {

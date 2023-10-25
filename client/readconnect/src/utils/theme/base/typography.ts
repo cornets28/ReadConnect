@@ -4,7 +4,7 @@ import colors from "./colors";
 const { dark } = colors;
 
 const baseProperties = {
-  fontFamily: 'Montserrat',
+  fontFamily: 'Montserrat !important',  
   fontWeightLight: 300,
   fontWeightRegular: 400,
   fontWeightMedium: 500,
@@ -62,6 +62,7 @@ const typographyStyle = {
   },
 
   h6: {
+  
     fontSize: pxToRem(16),
     lineHeight: 1.625,
     ...baseHeadingProperties,
