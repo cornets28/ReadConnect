@@ -5,7 +5,7 @@ import { Typography } from "../../mui-components/Typography/Typography"
 import typography from "../../utils/theme/base/typography";
 
 
-function Copyright() {
+const Copyright = () => {
     const { grey } = colors;
     const { size } = typography;
     return (

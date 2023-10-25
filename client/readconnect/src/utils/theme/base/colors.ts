@@ -1,6 +1,6 @@
 const colors = {
   primary: {
-    main: "#50830F",
+    main: "#50830F"    //"#50830F",
   },
 
   secondary: {
@@ -34,7 +34,7 @@ const colors = {
   },
 
   orange: {
-    main: "#d75e3d",
+    main: "#f5e0da",
     focus: "#e27933",
   },
 

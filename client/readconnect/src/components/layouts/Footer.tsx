@@ -5,7 +5,7 @@ import { Typography } from "../../mui-components/Typography/Typography";
 import typography from "../../utils/theme/base/typography";
 
 import colors from "../../utils/theme/base/colors";
-import Copyright from "./CopyRight";
+import Copyright from "./Copyright";
 
 const Footer = () => {
   const { green, skyBleu } = colors;
