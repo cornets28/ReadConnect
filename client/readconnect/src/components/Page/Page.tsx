@@ -18,10 +18,13 @@ export const Page: FC<PageType> = ({
       md={12}
       lg={12}
       bgcolor={white2.main}
-      textAlign="center"
-      minHeight="91vh"
+      minHeight="81vh"
+      justifyContent={'center'}
     >
-      {children}
+      <Grid container item xs={12} md={12} lg={10}   textAlign="center">
+        {children}
+      </Grid>
+    
     </Grid>
   );
 };
