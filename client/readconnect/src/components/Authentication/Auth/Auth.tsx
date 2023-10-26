@@ -14,7 +14,6 @@ import { Grid } from "@/mui-components/Grid/Grid";
 import { Container } from "@/mui-components/Container/Container";
 import { TextField } from "@/mui-components/TextField/TextField";
 import { useAuthenticationStyle } from "@/components/Authentication/styles/useAuthenticationStyle";
-import colors from "@/utils/theme/base/colors";
 import axios from "axios";
 import Modal from "@mui/material/Modal";
 import { SIGNUP_ROUTE, LOGIN_ROUTE} from "@/utils/constants";
@@ -73,7 +72,7 @@ export default function BasicModal({
   
           if (user) {
             dispatch({ type: reducerCases.SET_USER, userInfo: user });
-            window.location.reload();
+            // window.location.reload();
           }
         }
       } else {

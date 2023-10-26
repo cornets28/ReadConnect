@@ -4,6 +4,7 @@ export const initialState = {
     showLoginModal: false,
     showRegisterModal: false,
     userInfo: undefined,
+    isAuthor: false,
 }
 
 const reducer = (state: any, action: {

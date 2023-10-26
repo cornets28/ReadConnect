@@ -9,20 +9,18 @@ import Auth from "@/components/Authentication/Auth/Auth";
 const Index = () => {
   const [{ showLoginModal, showRegisterModal }] = useStateProvider();
 
-  // const [open, setOpen] = useState(false);
-  const handleOpen = () => showLoginModal || showRegisterModal //setOpen(true);
-  const handleClose = () =>  !showLoginModal || !showRegisterModal //setOpen(false);
+  const handleOpen = () => showLoginModal || showRegisterModal;
+  const handleClose = () => !showLoginModal || !showRegisterModal;
 
-
-  console.log("showRegisterModal: ", showRegisterModal)
+  console.log("showRegisterModal: ", showRegisterModal);
   return (
     <Page>
-      <Books handleOpen={handleOpen} />
+      <Books />
       {(showLoginModal || showRegisterModal) && (
         <Auth
           open={showLoginModal || showRegisterModal}
           handleClose={handleClose}
-          type={showLoginModal ? "login" : "register"} 
+          type={showLoginModal ? "login" : "register"}
         />
       )}
     </Page>

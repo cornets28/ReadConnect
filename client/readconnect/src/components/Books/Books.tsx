@@ -8,14 +8,10 @@ import { Button } from "@/mui-components/Button/Button";
 
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-const Books = ({
-  //@ts-ignore
-  handleOpen
-}) => {
+const Books = ({}) => {
   const classes = useBooksStyle()
   return (
     <Grid container>
-      <Button onClick={handleOpen}>Open modal</Button> 
       <Grid
         container
         sx={{
