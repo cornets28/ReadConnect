@@ -24,7 +24,7 @@ export default function MyDocument({ emotionStyleTags }: MyDocumentProps) {
       <Head>
         {/* PWA primary color */}
         <meta name="theme-color" content={theme.palette.primary.main} />
-        <link rel="shortcut icon" href="/favicon.ico" />
+        <link rel="shortcut icon" href="/books.png" />
         {/* Inject MUI styles first to match with the prepend: true configuration. */}
         {emotionStyleTags}
       </Head>

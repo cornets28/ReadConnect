@@ -36,7 +36,7 @@ export default function MyApp(props: MyAppProps) {
   return (
     <CacheProvider value={emotionCache}>
       <Head>
-        <meta name="viewport" content="initial-scale=1, width=device-width" />
+        <title>ReadConnect</title>
       </Head>
       <StateProvider initialState={initialState} reducer={reducer}>
       <ThemeProvider theme={theme}>

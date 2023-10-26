@@ -73,7 +73,7 @@ export default function BasicModal({
   
           if (user) {
             dispatch({ type: reducerCases.SET_USER, userInfo: user });
-            // window.location.reload();
+            window.location.reload();
           }
         }
       } else {
@@ -91,7 +91,7 @@ export default function BasicModal({
   
           if (user) {
             dispatch({ type: reducerCases.SET_USER, userInfo: user });
-            // window.location.reload();
+            window.location.reload();
           }
         }
       }
