@@ -9,8 +9,11 @@ import theme from "../utils/theme";
 import createEmotionCache from "../createEmotionCache";
 import { StylesProvider } from "@mui/styles";
 
-import Footer from "../components/layouts/Footer";
-import Navbar from "../components/layouts/Navbar";
+import Footer from "@/components/layouts/Footer";
+import Navbar from "@/components/layouts/Navbar";
+
+import { StateProvider } from "@/context/StateContext";
+import reducer, { initialState } from "@/context/StateReducer";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -33,12 +36,12 @@ export default function MyApp(props: MyAppProps) {
   return (
     <CacheProvider value={emotionCache}>
       <Head>
-        <meta name="viewport" content="initial-scale=1, width=device-width" />
+        <title>ReadConnect</title>
       </Head>
+      <StateProvider initialState={initialState} reducer={reducer}>
       <ThemeProvider theme={theme}>
         <Navbar />
         <CssBaseline />
-
         <StylesProvider
           generateClassName={(rule, sheet) =>
             // @ts-ignore
@@ -50,6 +53,8 @@ export default function MyApp(props: MyAppProps) {
 
         <Footer />
       </ThemeProvider>
+      </StateProvider>
+    
     </CacheProvider>
   );
 }
