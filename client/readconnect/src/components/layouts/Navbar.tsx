@@ -18,11 +18,11 @@ import { useRouter } from "next/router";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 
-import { GET_USER_INFO } from "../../utils/constants";
+import { GET_USER_INFO, HOST } from "../../utils/constants";
 import { reducerCases } from "@/context/constants";
 // import { useNavbarSearchStyle } from "./styles/useNavbarSearchStyle";
 
-const pages = ["Books", "Pricing", "Blog"];
+// const pages = ["Books", "Pricing", "Blog"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function ResponsiveAppBar() {
@@ -38,6 +38,13 @@ function ResponsiveAppBar() {
     useStateProvider();
   const router = useRouter();
 
+  const pages = [
+    { routeName: "Books", handler: "/", type: "link" },
+    { routeName: "Read Books", handler: "/read-books", type: "link" },
+    { routeName: "Saved Books", handler: "/saved-books", type: "link" },
+    // { routeName: "Readers", handler: "#", type: "link" },
+  ];
+
   const handleLogin = () => {
     if (showRegisterModal) {
       dispatch({
@@ -48,19 +55,6 @@ function ResponsiveAppBar() {
     dispatch({
       type: reducerCases.TOGGLE_LOGIN_MODAL,
       showLoginModal: true,
-    });
-  };
-
-  const handleSignup = () => {
-    if (showLoginModal) {
-      dispatch({
-        type: reducerCases.TOGGLE_LOGIN_MODAL,
-        showLoginModal: false,
-      });
-    }
-    dispatch({
-      type: reducerCases.TOGGLE_REGISTER_MODAL,
-      showRegisterModal: true,
     });
   };
 
@@ -89,7 +83,6 @@ function ResponsiveAppBar() {
   }, [dispatch, userInfo]);
 
   useEffect(() => {
-    console.log("GET_USER_INFO: ", GET_USER_INFO)
     if (cookies.jwt && !userInfo) {
       const getUserInfo = async () => {
         try {
@@ -106,11 +99,11 @@ function ResponsiveAppBar() {
             }
           );
           let projectedUserInfo = { ...user };
-          console.log("user", user);
+          console.log("user from navbar", user.image);
           if (user.image) {
             projectedUserInfo = {
               ...projectedUserInfo,
-              // imageName: HOST + "/" + user.image,
+              imageName: HOST + "/" + user.image,
             };
           }
 
@@ -121,11 +114,6 @@ function ResponsiveAppBar() {
           });
 
           setIsLoaded(true);
-          console.log({ user });
-       
-          if (user.isProfileSet === false) {
-            // router.push("/profile");
-          }
         } catch (error) {
           console.log("error", error);
         }
@@ -187,9 +175,9 @@ function ResponsiveAppBar() {
                     display: { xs: "block", md: "none" },
                   }}
                 >
-                  {pages.map((page) => (
-                    <MenuItem key={page} onClick={handleCloseNavMenu}>
-                      <Typography textAlign="center">{page}</Typography>
+                  {pages.map(({ routeName, handler }) => (
+                    <MenuItem key={routeName} onClick={handleCloseNavMenu}>
+                      <Typography textAlign="center">{routeName}</Typography>
                     </MenuItem>
                   ))}
                 </Menu>
@@ -213,13 +201,14 @@ function ResponsiveAppBar() {
                 ReadConnect
               </Typography>
               <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-                {pages.map((page) => (
+                {pages.map(({ routeName, handler }) => (
                   <Button
-                    key={page}
+                    key={routeName}
                     onClick={handleCloseNavMenu}
                     sx={{ my: 2, color: "white", display: "block" }}
+                    href={handler}
                   >
-                    {page}
+                    {routeName}
                   </Button>
                 ))}
 
@@ -266,24 +255,18 @@ function ResponsiveAppBar() {
                 ) : (
                   <Tooltip title="Open settings">
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                      {/* {userInfo && (
-                      <Avatar
-                        alt="Remy Sharp"
-                        src="/static/images/avatar/2.jpg"
-                      />
-                    )} */}
-
-                      {userInfo?.imageName && (
+                      {userInfo.imageName ? (
                         <Image
                           src={userInfo.imageName}
                           alt="Profile"
                           width={40}
                           height={40}
+                          style={{
+                            borderRadius: 70,
+                          }}
                           className="rounded-full"
                         />
-                      )}
-
-                      {userInfo && (
+                      ) : (
                         <div
                           style={{
                             height: 50,

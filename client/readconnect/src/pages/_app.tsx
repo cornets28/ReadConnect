@@ -24,6 +24,7 @@ export interface MyAppProps extends AppProps {
 
 export default function MyApp(props: MyAppProps) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
+  
 
   React.useEffect(() => {
     // Remove the server-side injected CSS.

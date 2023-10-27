@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import Avatar from "@mui/material/Avatar";
 
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -21,6 +21,7 @@ import { reducerCases } from "@/context/constants";
 import { useStateProvider } from "@/context/StateContext";
 
 import { useCookies } from "react-cookie";
+import { useRouter } from "next/router";
 
 const style = {
   position: "absolute" as "absolute",
@@ -38,8 +39,9 @@ export default function BasicModal({
   // @ts-ignore
   open, handleClose, type,
 }) {
-  const [cookie, setCookie] = useCookies()
+
   const [{ showLoginModal, showRegisterModal }, dispatch] = useStateProvider();
+  const router = useRouter();
 
   const [values, setValues] = useState({
     username: "",
@@ -47,60 +49,50 @@ export default function BasicModal({
     password: "",
   });
 
+  const [cookies] = useCookies(["jwt"]);
+
+  useEffect(() => {
+    const jwtCookie = cookies.jwt; 
+  
+    if (jwtCookie) {
+      dispatch({ type: reducerCases.CLOSE_AUTH_MODAL });
+    }
+  }, [cookies, dispatch]);
+
+
   const handleChange = (e: any) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
-    
     try {
-      const { username, email, password } = values;
+      const { email, password } = values;
+      if (email && password) {
+        const {
+          data: { user, jwt },
+        } = await axios.post(
+          type === "login" ? LOGIN_ROUTE : SIGNUP_ROUTE,
+          { email, password },
+          { withCredentials: true }
+        );
+        // get the JWT token
+        document.cookie = `jwt=${encodeURIComponent(jwt)}; SameSite=strict;`;
+      
+        dispatch({ type: reducerCases.CLOSE_AUTH_MODAL });
+        console.log("User:", user);
 
-      if (type === "login") {
-        if (password && email) {
-          const {
-            data: { user, jwt }
-          } = await axios.post(
-            LOGIN_ROUTE,
-            {email, password },
-            { withCredentials: true }
-          );
-          setCookie("jwt", { jwt });
-  
-          dispatch({ type: reducerCases.CLOSE_AUTH_MODAL });
-  
-          if (user) {
-            dispatch({ type: reducerCases.SET_USER, userInfo: user });
-            // window.location.reload();
-          }
-        }
-      } else {
-        if (username && password && email) {  
-          const {
-            data: { user, jwt }
-          } = await axios.post(
-             SIGNUP_ROUTE,
-            { username, email, password },
-            { withCredentials: true }
-          );
-          setCookie("jwt", { jwt });
-  
-          dispatch({ type: reducerCases.CLOSE_AUTH_MODAL });
-  
-          if (user) {
-            dispatch({ type: reducerCases.SET_USER, userInfo: user });
-            window.location.reload();
-          }
+        if (user) {
+          if (type === "register") router.push('/profile')
+          dispatch({ type: reducerCases.SET_USER, userInfo: user });
+          
         }
       }
-
-  
-      
-    } catch (error) {
-      console.log("error:", error);
+    } catch (err) {
+      console.log(err);
     }
   };
+
 
   return (
     <div>
@@ -129,22 +121,6 @@ export default function BasicModal({
                   : "Register to ReadConnect"}
               </Typography>
               <Box component="form" sx={{ mt: 1 }}>
-                {type === "register" && (
-                  <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="username"
-                    label="Username"
-                    name="username"
-                    autoComplete="username"
-                    autoFocus
-                    size="small"
-                    onChange={handleChange}
-                    value={values.username}
-                  />
-                )}
-
                 <TextField
                   margin="normal"
                   required
