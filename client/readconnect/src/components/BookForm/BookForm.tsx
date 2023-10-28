@@ -324,7 +324,7 @@ const BookForm: FC = () => {
             </Grid>
             <Grid item xs={12}>
               <div>
-                <Typography className={""}>Gig Images</Typography>
+                <Typography className={""}>Books Images</Typography>
                 <div>
                   <BookImageUpload files={files} setFile={setFile} />
                 </div>

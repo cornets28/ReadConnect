@@ -56,3 +56,20 @@ export const addBook = async (req, res, next) => {
     return res.status(500).send("Internal Server Error");
   }
 };
+
+export const getUserAuthBooks = async (req, res, next) => {
+  try {
+    if (req.userId) {
+      const prisma = new PrismaClient();
+      const user = await prisma.user.findUnique({
+        where: { id: req.userId },
+        include: { books: true },
+      });
+      return res.status(200).json({ books: user?.books ?? [] });
+    }
+    return res.status(400).send("UserId should be required.");
+  } catch (err) {
+    console.log(err);
+    return res.status(500).send("Internal Server Error");
+  }
+};

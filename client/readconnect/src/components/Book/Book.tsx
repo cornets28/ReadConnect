@@ -13,12 +13,18 @@ import typography from "@/utils/theme/base/typography";
 import colors from "@/utils/theme/base/colors";
 import { BookType } from "@/types/BookType";
 import { useBookStyle } from "./styles/useBookStyle";
+import Link from "@mui/icons-material/Link";
+import { Grid } from "@mui/material";
 
-export const Book: FC<BookType> = ({ title, shortDescription, bookId }) => {
-  const { green, skyBleu } = colors;
-  const { h6, size, button } = typography;
+export const Book: FC<BookType> = ({
+  title,
+  shortDescription,
+  bookId,
+  categories,
+}) => {
+  const { orange } = colors;
+  const { h6, size, } = typography;
 
-  // const navigate = useNavigate();
   const classes = useBookStyle();
   return (
     <Card sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
@@ -40,22 +46,41 @@ export const Book: FC<BookType> = ({ title, shortDescription, bookId }) => {
           {shortDescription}
         </Typography>
       </CardContent>
-      <CardActions>
-        <Button
-          size="small"
-          className={classes.viewButton}
-          href={"/books/detail/" + bookId}
+  
+        <Grid container>
+        <Grid
+          item
+          xs={12}
+          sm={12}
+          md={12}
+          textAlign="left"
+          mx={3}
+          style={{
+            color: orange.focus,
+            fontSize: size.xxs,
+          }}
         >
-          View
-        </Button>
-        <Button
-          size="small"
-          className={classes.editButton}
-          href={"/books/detail/" + bookId}
-        >
-          Edit
-        </Button>
-      </CardActions>
+          {categories.map((category: any, index: number) => (
+            <a href={"/books/categories/" + category} key={index}>{category} </a>
+          ))}
+        </Grid>
+          <Grid item xs={12} sm={12} md={12} width={'100%'}>
+            <Button
+              size="small"
+              className={classes.viewButton}
+              href={"/books/detail/" + bookId}
+            >
+              View
+            </Button>
+            <Button
+              size="small"
+              className={classes.editButton}
+              href={"/books/detail/" + bookId}
+            >
+              Edit
+            </Button>
+          </Grid>
+        </Grid>
     </Card>
   );
 };
@@ -63,7 +88,8 @@ export const Book: FC<BookType> = ({ title, shortDescription, bookId }) => {
 Book.propTypes = {
   title: PropTypes.string.isRequired,
   shortDescription: PropTypes.string.isRequired,
-  bookId: PropTypes.number.isRequired,
+  bookId: PropTypes.object.isRequired,
+  // category: PropTypes.any.isRequired,
 };
 
 export default Book;

@@ -39,10 +39,11 @@ function ResponsiveAppBar() {
   const router = useRouter();
 
   const pages = [
-    { routeName: "Books", handler: "/", type: "link" },
-    { routeName: "Read Books", handler: "/read-books", type: "link" },
-    { routeName: "Saved Books", handler: "/saved-books", type: "link" },
-    // { routeName: "Readers", handler: "#", type: "link" },
+    { routeName: "Books", handler: "/" },
+    { routeName: "Read Books", handler: "/read-books" },
+    { routeName: "Saved Books", handler: "/saved-books" },
+    // { routeName: "My Books", handler: "/books/my-books" },
+    // { routeName: "Readers", handler: "#" },
   ];
 
   const handleLogin = () => {
