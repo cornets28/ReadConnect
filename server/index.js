@@ -23,6 +23,7 @@ app.use(express.json());
 
 app.use("/api/auth", authRoutes);
 app.use("/uploads/profiles", express.static("uploads/profiles"));
+app.use("/uploads", express.static("uploads"));
 
 app.use("/api/books", booksRoutes);
 

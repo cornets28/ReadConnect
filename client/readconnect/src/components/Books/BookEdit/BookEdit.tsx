@@ -1,11 +1,11 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import Avatar from "@mui/material/Avatar";
 
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 
 import { Typography } from "@/mui-components/Typography/Typography";
-import typography from "../../utils/theme/base/typography";
-import colors from "../../utils/theme/base/colors";
+import typography from "../../../utils/theme/base/typography";
+import colors from "../../../utils/theme/base/colors";
 import { Grid } from "@/mui-components/Grid/Grid";
 import { Box } from "@/mui-components/Box/Box";
 import { Container } from "@/mui-components/Container/Container";
@@ -23,7 +23,7 @@ import BookImageUpload from "../BookImageUpload/BookImageUpload";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 import { useRouter } from "next/router";
-import { ADD_BOOK_ROUTE } from "@/utils/constants";
+import { ADD_BOOK_ROUTE, EDIT_BOOK_ROUTE, GET_BOOK_DATA, HOST } from "@/utils/constants";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -54,10 +54,12 @@ const authors = [
   "Kelly Snyder",
 ];
 
-const BookForm: FC = () => {
+const BookEdit: FC = () => {
   const [files, setFile] = useState([]);
   const [cookies] = useCookies();
   const router = useRouter();
+
+  const { bookId } = router.query;
   const [data, setData] = useState({
     title: "",
     categories: [],
@@ -69,19 +71,8 @@ const BookForm: FC = () => {
     authors: [],
   });
 
-  const [personName, setPersonName] = useState([]);
-  const [selectedAuthors, setSelectedAuthors] = useState([]);
-
-  const handleCategoryChange = (event: any) => {
-    setPersonName(event.target.value);
-    setSelectedAuthors(event.target.value);
-  };
-
   const handleChange = (e: any) => {
-    // setData({ ...data, [e.target.name]: e.target.value });
-    
     const { name, value } = e.target;
-
     // Check if the name is "pageCount" and parse the value as an integer
     if (name === "pageCount") {
       setData({ ...data, [name]: parseInt(value, 10) });
@@ -90,7 +81,7 @@ const BookForm: FC = () => {
     }
   };
 
-  const registerBook = async (event: any) => {
+  const editBook = async (event: any) => {
     event.preventDefault();
     const {
       title,
@@ -122,8 +113,8 @@ const BookForm: FC = () => {
         pageCount,
         authors,
       };
-      console.log("JWTTTTTT :", data)
-      const response = await axios.post(ADD_BOOK_ROUTE, formData, {
+      //@ts-ignore
+      const response = await axios.put( `${EDIT_BOOK_ROUTE}/${data.id}`, formData, {
         withCredentials: true,
         headers: {
           "Content-Type": "multipart/form-data",
@@ -132,14 +123,43 @@ const BookForm: FC = () => {
 
         params: booksData,
       });
+
+      console.log("EDIT_BOOK_ROUTE: ", EDIT_BOOK_ROUTE)
      
-      if (response.status === 201) {
-        router.push("/");
+      if (response.status === 200) {
+        router.push("/books/my-books");
       }
     }
-
-    console.log("datadscxsd", data);
   };
+
+  useEffect(() => {
+    const fetchBookData = async () => {
+      try {
+        const {
+          data: { book },
+        } = await axios.get(`${GET_BOOK_DATA}/${bookId}`);
+
+        setData({ ...book, time: book.revisions });
+       console.log('book: ', book);
+
+        book.thumbnailUrl.forEach((image: any) => {
+          const url = HOST + "/uploads" + image;
+          const fileName = image;
+          fetch(url).then(async (response) => {
+            const contentType = response.headers.get("content-type");
+            const blob = await response.blob();
+            // @ts-ignore
+            const files = new File([blob], fileName, { contentType });
+            // @ts-ignore
+            setFile(files);
+          });
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    if (bookId) fetchBookData();
+  }, [bookId])
 
   return (
     <Container component="main" maxWidth="xs">
@@ -155,7 +175,7 @@ const BookForm: FC = () => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Add A Book
+          Edit Book
         </Typography>
         <Box component="form" sx={{ mt: 3 }}>
           <Grid container spacing={1}>
@@ -336,9 +356,9 @@ const BookForm: FC = () => {
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2, backgroundColor: "secondary.main" }}
-                onClick={registerBook}
+                onClick={editBook}
               >
-                Register Book
+                Update Book
               </Button>
             </Grid>
           </Grid>
@@ -348,4 +368,4 @@ const BookForm: FC = () => {
   );
 };
 
-export default BookForm;
+export default BookEdit;

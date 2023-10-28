@@ -1,4 +1,4 @@
-import BookForm from '@/components/BookForm/BookForm';
+import BookForm from '@/components/Books/BookForm/BookForm';
 import Page from '@/components/Page/Page';
 import React, { FC } from 'react'
 

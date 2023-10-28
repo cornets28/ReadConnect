@@ -1,12 +1,12 @@
 
 import React from "react";
-import PropTypes from "prop-types";
 import Page from "@/components/Page/Page";
+import BookEdit from "@/components/Books/BookEdit/BookEdit";
 
 function BookDetail() {
   return (
     <Page>
-      <div>[id] details </div>;
+       <BookEdit />
     </Page>
   );
 }

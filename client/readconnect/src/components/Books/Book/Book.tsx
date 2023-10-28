@@ -6,15 +6,14 @@ import { Card } from "@/mui-components/Card/Card";
 import { CardMedia } from "@/mui-components/CardMedia/CardMedia";
 import { CardContent } from "@/mui-components/CardContent/CardContent";
 import { Button } from "@/mui-components/Button/Button";
-import { CardActions } from "@/mui-components/CardActions//CardActions";
 import { Typography } from "@/mui-components/Typography/Typography";
 
 import typography from "@/utils/theme/base/typography";
-import colors from "@/utils/theme/base/colors";
 import { BookType } from "@/types/BookType";
 import { useBookStyle } from "./styles/useBookStyle";
-import Link from "@mui/icons-material/Link";
 import { Grid } from "@mui/material";
+
+import CategoriesContainer from "./components/CategoriesContainer";
 
 export const Book: FC<BookType> = ({
   title,
@@ -22,8 +21,7 @@ export const Book: FC<BookType> = ({
   bookId,
   categories,
 }) => {
-  const { orange } = colors;
-  const { h6, size, } = typography;
+  const { size } = typography;
 
   const classes = useBookStyle();
   return (
@@ -38,49 +36,46 @@ export const Book: FC<BookType> = ({
         }}
         image="https://source.unsplash.com/random?wallpapers"
       />
+      {/* <Image src={URL.createObjectURL(image)} fill alt="Book" /> */}
       <CardContent sx={{ flexGrow: 1, mt: -1 }}>
         <Typography fontSize={size.xs} fontWeight="bold" textAlign="center">
           {title}
         </Typography>
-        <Typography fontSize={size.xxs} component="p">
+        <Typography
+          fontSize={size.xxs}
+          component="p"
+          height={60}
+          overflow={"scroll"}
+        >
           {shortDescription}
         </Typography>
       </CardContent>
-  
-        <Grid container>
-        <Grid
-          item
-          xs={12}
-          sm={12}
-          md={12}
-          textAlign="left"
-          mx={3}
-          style={{
-            color: orange.focus,
-            fontSize: size.xxs,
-          }}
-        >
-          {categories.map((category: any, index: number) => (
-            <a href={"/books/categories/" + category} key={index}>{category} </a>
+
+      <Grid container>
+        <CategoriesContainer>
+          {categories?.map((category: any, index: number) => (
+            <a href={"/books/categories/" + category} key={index}>
+              {category}{" "}
+            </a>
           ))}
+        </CategoriesContainer>
+        <Grid item xs={12} sm={12} md={12} width={"100%"}>
+          <Button
+            size="small"
+            className={classes.viewButton}
+            href={"/books/details/" + bookId}
+          >
+            View
+          </Button>
+          <Button
+            size="small"
+            className={classes.editButton}
+            href={"/books/details/" + bookId}
+          >
+            Edit
+          </Button>
         </Grid>
-          <Grid item xs={12} sm={12} md={12} width={'100%'}>
-            <Button
-              size="small"
-              className={classes.viewButton}
-              href={"/books/detail/" + bookId}
-            >
-              View
-            </Button>
-            <Button
-              size="small"
-              className={classes.editButton}
-              href={"/books/detail/" + bookId}
-            >
-              Edit
-            </Button>
-          </Grid>
-        </Grid>
+      </Grid>
     </Card>
   );
 };
@@ -88,7 +83,7 @@ export const Book: FC<BookType> = ({
 Book.propTypes = {
   title: PropTypes.string.isRequired,
   shortDescription: PropTypes.string.isRequired,
-  bookId: PropTypes.object.isRequired,
+  // bookId: PropTypes.object.isRequired,
   // category: PropTypes.any.isRequired,
 };
 

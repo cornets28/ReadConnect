@@ -3,7 +3,7 @@ import { Grid } from "@/mui-components/Grid/Grid";
 import { Container } from "@/mui-components/Container/Container";
 import { Typography } from "@/mui-components/Typography/Typography";
 
-import typography from "../../utils/theme/base/typography";
+import typography from "../../../utils/theme/base/typography";
 import colors from "@/utils/theme/base/colors";
 
 const EmptyBooks: FC = () => {

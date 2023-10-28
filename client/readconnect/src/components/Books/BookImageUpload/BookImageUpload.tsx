@@ -24,9 +24,6 @@ const BookImageUpload = ({ files, setFile }) => {
     }
   };
 
-  const removeImage = (i) => {
-    setFile(files.filter((x) => x.name !== i));
-  };
   return (
     <>
      <div>
@@ -60,7 +57,7 @@ const BookImageUpload = ({ files, setFile }) => {
                   onChange={handleFile}
                   className="opacity-0"
                   multiple={true}
-                  name="files[]"
+                  name="thumbnailUrl"
                 />
               </label>
             </div>
@@ -68,16 +65,8 @@ const BookImageUpload = ({ files, setFile }) => {
               {files.map((file, key) => {
                 return (
                   <div key={key} className="">
-                    <i
-                      onClick={() => {
-                        removeImage(file.name);
-                      }}
-                      className=""
-                    >
-                      X
-                    </i>
                     <div className="r">
-                      <Image src={URL.createObjectURL(file)} fill alt="Gigs" />
+                      <Image src={URL.createObjectURL(file)} fill alt="Book" />
                     </div>
                   </div>
                 );
