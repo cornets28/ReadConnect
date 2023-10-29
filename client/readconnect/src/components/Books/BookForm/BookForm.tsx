@@ -1,8 +1,6 @@
 import React, { FC, useState } from "react";
 import Avatar from "@mui/material/Avatar";
-
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-
 import { Typography } from "@/mui-components/Typography/Typography";
 import typography from "../../../utils/theme/base/typography";
 import colors from "../../../utils/theme/base/colors";
@@ -128,9 +126,8 @@ const BookForm: FC = () => {
         router.push("/");
       }
     }
-
-    console.log("datadscxsd", data);
   };
+  
 
   return (
     <Container component="main" maxWidth="xs">

@@ -12,7 +12,6 @@ import BooksContainer from "../BookContainer/BooksContainer";
 
 const Books: FC = () => {
   const [books, setBooks] = useState([]);
-  const [bookStatus, setBookStatus] = useState({});
 
   useEffect(() => {
     const getUserBooks = async () => {
@@ -30,12 +29,7 @@ const Books: FC = () => {
     getUserBooks();
   }, []);
 
-  // @ts-ignore
-  const handleStatusChange = (bookId, status) => {
-    // @ts-ignore
-    setBookStatus({ ...bookStatus, [bookId]: status });
-  };
-
+ 
   return (
     <BooksContainer>
       {books.length > 0 && (
@@ -57,31 +51,6 @@ const Books: FC = () => {
                   bookId={id}
                   categories={categories}
                 />
-
-                <div>
-                  <label>
-                    <input
-                      type="radio"
-                      name={`status-${id}`}
-                      value="read"
-                      checked={bookStatus[id] === "read"}
-                      onChange={() => handleStatusChange(id, "read")}
-                    />{" "}
-                    Read
-                  </label>
-                  <label>
-                    <input
-                      type="radio"
-                      name={`status-${id}`}
-                      value="savedToReadLater"
-                      checked={bookStatus[id] === "savedToReadLater"}
-                      onChange={() =>
-                        handleStatusChange(id, "savedToReadLater")
-                      }
-                    />{" "}
-                    Saved to Read Later
-                  </label>
-                </div>
               </Grid>
             ))
           ) : (

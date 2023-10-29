@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 
@@ -70,7 +70,7 @@ export const Book: FC<BookType> = ({
           <Button
             size="small"
             className={classes.editButton}
-            href={"/books/details/" + bookId}
+            href={"/books/edit/" + bookId}
           >
             Edit
           </Button>

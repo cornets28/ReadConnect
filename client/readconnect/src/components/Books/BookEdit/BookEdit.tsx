@@ -79,7 +79,6 @@ const BookEdit: FC = () => {
       setData({ ...data, [name]: value });
     }
   };
-
   const editBook = async (event: any) => {
     event.preventDefault();
     const {
@@ -91,7 +90,7 @@ const BookEdit: FC = () => {
       pageCount,
       authors,
     } = data;
-  
+
     if (
       title &&
       categories.length &&
@@ -102,8 +101,8 @@ const BookEdit: FC = () => {
       authors.length
     ) {
       const formData = new FormData();
-      files.forEach((file) => formData.append("images", file));
-      const booksData = {
+      files.forEach((file) => formData.append("thumbnailUrl", file));
+      const bookData = {
         title,
         categories,
         isbn,
@@ -112,21 +111,21 @@ const BookEdit: FC = () => {
         pageCount,
         authors,
       };
-      //@ts-ignore
-      const response = await axios.put( `${EDIT_BOOK_ROUTE}/${data.id}`, formData, {
-        withCredentials: true,
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${cookies.jwt}`,
-        },
-
-        params: booksData,
-      });
-
-      console.log("EDIT_BOOK_ROUTE: ", EDIT_BOOK_ROUTE)
-     
-      if (response.status === 200) {
-        router.push("/books/my-books");
+      const response = await axios.put(
+        //@ts-ignore
+        `${EDIT_BOOK_ROUTE}/${data.id}`,
+        formData,
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${cookies.jwt}`,
+          },
+          params: bookData,
+        }
+      );
+      if (response.status === 201) {
+        router.push("/");
       }
     }
   };
@@ -138,11 +137,11 @@ const BookEdit: FC = () => {
           data: { book },
         } = await axios.get(`${GET_BOOK_DATA}/${bookId}`);
 
-        setData({ ...book, time: book.revisions });
-       console.log('book: ', book);
+        setData({ ...book});
 
         book.thumbnailUrl.forEach((image: any) => {
-          const url = HOST + "/uploads" + image;
+          const url = HOST + "/uploads/" + image;
+          console.log("HOST", url)
           const fileName = image;
           fetch(url).then(async (response) => {
             const contentType = response.headers.get("content-type");
@@ -153,6 +152,7 @@ const BookEdit: FC = () => {
             setFile(files);
           });
         });
+
       } catch (err) {
         console.log(err);
       }
@@ -345,7 +345,9 @@ const BookEdit: FC = () => {
               <div>
                 <Typography className={""}>Books Images</Typography>
                 <div>
-                  <BookImageUpload files={files} setFile={setFile} />
+                  {/* <BookImageUpload files={files} setFile={setFile} /> */}
+                  <BookImageUpload files={Array.isArray(files) ? files : []} setFile={setFile} />
+
                 </div>
               </div>
             </Grid>
