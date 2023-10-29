@@ -10,8 +10,9 @@ import axios from "axios";
 import EmptyBooks from "./EmptyBooks";
 import BooksContainer from "../BookContainer/BooksContainer";
 
-const MyBooks: FC = () => {
+const Books: FC = () => {
   const [books, setBooks] = useState([]);
+  const [bookStatus, setBookStatus] = useState({});
 
   useEffect(() => {
     const getUserBooks = async () => {
@@ -29,13 +30,22 @@ const MyBooks: FC = () => {
     getUserBooks();
   }, []);
 
+  // @ts-ignore
+  const handleStatusChange = (bookId, status) => {
+    // @ts-ignore
+    setBookStatus({ ...bookStatus, [bookId]: status });
+  };
+
   return (
     <BooksContainer>
-      <Title
-        text="Choose as many books as you want. You can either save them to read later, or mark them as read if this is your case."
-        title1="Our"
-        title2="Books"
-      />
+      {books.length > 0 && (
+        <Title
+          text="Choose as many books as you want. You can either save them to read later, or mark them as read if this is your case."
+          title1="Our"
+          title2="Books"
+        />
+      )}
+
       <Container sx={{ py: 6 }} maxWidth="md">
         <Grid container spacing={3}>
           {books.length > 0 ? (
@@ -47,10 +57,35 @@ const MyBooks: FC = () => {
                   bookId={id}
                   categories={categories}
                 />
+
+                <div>
+                  <label>
+                    <input
+                      type="radio"
+                      name={`status-${id}`}
+                      value="read"
+                      checked={bookStatus[id] === "read"}
+                      onChange={() => handleStatusChange(id, "read")}
+                    />{" "}
+                    Read
+                  </label>
+                  <label>
+                    <input
+                      type="radio"
+                      name={`status-${id}`}
+                      value="savedToReadLater"
+                      checked={bookStatus[id] === "savedToReadLater"}
+                      onChange={() =>
+                        handleStatusChange(id, "savedToReadLater")
+                      }
+                    />{" "}
+                    Saved to Read Later
+                  </label>
+                </div>
               </Grid>
             ))
           ) : (
-            <EmptyBooks />
+            <EmptyBooks text="There are no Books!" />
           )}
         </Grid>
       </Container>
@@ -58,4 +93,4 @@ const MyBooks: FC = () => {
   );
 };
 
-export default MyBooks;
+export default Books;

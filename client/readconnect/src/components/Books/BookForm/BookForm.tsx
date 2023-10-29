@@ -69,17 +69,8 @@ const BookForm: FC = () => {
     authors: [],
   });
 
-  const [personName, setPersonName] = useState([]);
-  const [selectedAuthors, setSelectedAuthors] = useState([]);
-
-  const handleCategoryChange = (event: any) => {
-    setPersonName(event.target.value);
-    setSelectedAuthors(event.target.value);
-  };
-
+ 
   const handleChange = (e: any) => {
-    // setData({ ...data, [e.target.name]: e.target.value });
-    
     const { name, value } = e.target;
 
     // Check if the name is "pageCount" and parse the value as an integer
@@ -122,7 +113,7 @@ const BookForm: FC = () => {
         pageCount,
         authors,
       };
-      console.log("JWTTTTTT :", data)
+   
       const response = await axios.post(ADD_BOOK_ROUTE, formData, {
         withCredentials: true,
         headers: {

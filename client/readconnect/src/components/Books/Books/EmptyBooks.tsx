@@ -5,14 +5,15 @@ import { Typography } from "@/mui-components/Typography/Typography";
 
 import typography from "../../../utils/theme/base/typography";
 import colors from "@/utils/theme/base/colors";
+import { EmptyBooksType } from "@/types/EmptyBooksType";
 
-const EmptyBooks: FC = () => {
+const EmptyBooks: FC<EmptyBooksType> = ({ text }) => {
   const { orange } = colors;
   const { h2 } = typography;
 
   return (
     <Grid container>
-      <Container sx={{ py: '40%'}} maxWidth="md">
+      <Container sx={{ py: '30%'}} maxWidth="md">
         <Grid
           container
           spacing={3}
@@ -24,7 +25,7 @@ const EmptyBooks: FC = () => {
             fontSize={h2}
             color={orange.focus}
           >
-            You Have no Books!
+            {text}
           </Typography>
         </Grid>
       </Container>

@@ -35,7 +35,9 @@ const MyBooks: FC = () => {
     };
     getUserBooks();
   }, []);
-
+ 
+        
+  console.log("BOOKK: ", books)
   return (
     <BooksContainer>
       <Title
@@ -57,7 +59,7 @@ const MyBooks: FC = () => {
               </Grid>
             ))
           ) : (
-            <EmptyBooks />
+            <EmptyBooks text="You Have no Books!" />
           )}
         </Grid>
       </Container>

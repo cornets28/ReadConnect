@@ -58,7 +58,6 @@ const BookEdit: FC = () => {
   const [files, setFile] = useState([]);
   const [cookies] = useCookies();
   const router = useRouter();
-
   const { bookId } = router.query;
   const [data, setData] = useState({
     title: "",
@@ -103,7 +102,7 @@ const BookEdit: FC = () => {
       authors.length
     ) {
       const formData = new FormData();
-      files.forEach((file) => formData.append("thumbnailUrl", file));
+      files.forEach((file) => formData.append("images", file));
       const booksData = {
         title,
         categories,

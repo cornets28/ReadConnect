@@ -119,10 +119,10 @@ export const editBook = async (req, res, next) => {
           authors,
         } = req.query;
         const prisma = new PrismaClient();
-        // const thumbnailUrl = fileNames.join(',');
-        const oldData = await prisma.books.findUnique({
-          where: { id: parseInt(req.params.bookId) },
-        });
+        const thumbnailUrl = fileNames.join(',');
+        // const oldData = await prisma.books.findUnique({
+        //   where: { id: parseInt(req.params.bookId) },
+        // });
         await prisma.books.update({
           where: { id: parseInt(req.params.bookId) },
           data: {
@@ -139,9 +139,9 @@ export const editBook = async (req, res, next) => {
             thumbnailUrl,
           },
         });
-        oldData?.images.forEach((image) => {
-          if (existsSync(`uploads/${image}`)) unlinkSync(`uploads/${image}`);
-        });
+        // oldData?.images.forEach((image) => {
+        //   if (existsSync(`uploads/${image}`)) unlinkSync(`uploads/${image}`);
+        // });
 
         return res.status(201).send("Successfully Edited the book.");
       }

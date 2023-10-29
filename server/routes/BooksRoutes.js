@@ -19,4 +19,7 @@ booksRoutes.get("/get-book-data/:bookId", getBookData);
 booksRoutes.put("/edit-book/:bookId", verifyToken, upload.array("images"), editBook);
 booksRoutes.get("/get-all-books", verifyToken, getBooks);
 
+// booksRoutes.post("/mark-as-read/:bookId", verifyToken, markBookAsRead);
+// booksRoutes.post("/mark-as-saved/:bookId", verifyToken, markBookAsSaved)
+
 export default booksRoutes;
