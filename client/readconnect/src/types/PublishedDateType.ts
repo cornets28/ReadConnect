@@ -1,4 +1,3 @@
 export type PublishedDateType = {
-    date: string;
-    author: string
+    bookDDataId: string
 }

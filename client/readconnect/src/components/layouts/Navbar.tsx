@@ -243,8 +243,8 @@ function ResponsiveAppBar() {
               <Box sx={{ flexGrow: 0, display: "flex" }}>
                 {userInfo && (
                   <Button
-                    onClick={() => router.push("/add-book")}
                     sx={{ my: 2, color: "white", display: "block" }}
+                    onClick={() => router.push("/books/create")}
                   >
                     Add Book
                   </Button>

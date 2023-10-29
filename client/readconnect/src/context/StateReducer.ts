@@ -5,12 +5,14 @@ export const initialState = {
     showRegisterModal: false,
     userInfo: undefined,
     isAuthor: false,
+    bookData: undefined,
 }
 
 const reducer = (state: any, action: {
     userInfo: any;
     showRegisterModal: any;
     showLoginModal: any; type: any; 
+    bookData: any;
 }) => {
     switch (action.type) {
         case reducerCases.TOGGLE_LOGIN_MODAL:
@@ -34,6 +36,12 @@ const reducer = (state: any, action: {
                 ...state,
                 userInfo: action.userInfo,
             }
+        case reducerCases.GET_BOOK_DATA:
+            return {
+                ...state,
+                bookData: action.bookData
+            }
+
         default:
             return state;
     }
