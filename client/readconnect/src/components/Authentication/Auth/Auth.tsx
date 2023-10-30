@@ -83,9 +83,9 @@ export default function BasicModal({
         console.log("User:", user);
 
         if (user) {
-          if (type === "register") router.push('/profile')
           dispatch({ type: reducerCases.SET_USER, userInfo: user });
-          
+          if (type === "register") router.push('/profile')
+          if (type === "login") window.location.reload();
         }
       }
     } catch (err) {

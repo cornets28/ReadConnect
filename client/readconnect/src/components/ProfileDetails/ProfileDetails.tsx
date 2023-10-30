@@ -1,15 +1,12 @@
-/* eslint-disable @next/next/no-img-element */
+import React, { useEffect, useState } from "react";
 import { useStateProvider } from "@/context/StateContext";
 import { useRouter } from "next/router";
-import React, { ChangeEvent, useEffect, useState } from "react";
 import { Typography } from "@/mui-components/Typography/Typography";
 import typography from "../../utils/theme/base/typography";
 import colors from "../../utils/theme/base/colors";
 import { Grid } from "@/mui-components/Grid/Grid";
 import { Box } from "@/mui-components/Box/Box";
-import Image from "next/image";
 import { Container } from "@/mui-components/Container/Container";
-import Avatar from "@mui/material/Avatar/Avatar";
 import { TextField } from "@/mui-components/TextField/TextField";
 import { Button } from "@/mui-components/Button/Button";
 import { HOST, SET_USER_IMAGE, SET_USER_INFO } from "@/utils/constants";

@@ -7,7 +7,6 @@ import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
@@ -22,16 +21,12 @@ import { GET_USER_INFO, HOST } from "../../utils/constants";
 import { reducerCases } from "@/context/constants";
 // import { useNavbarSearchStyle } from "./styles/useNavbarSearchStyle";
 
-// const pages = ["Books", "Pricing", "Blog"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
-
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const [isLoaded, setIsLoaded] = useState<boolean>(true);
   const [searchData, setSearchData] = useState<any>("");
   // const classes = useNavbarSearchStyle();
-
   const [cookies] = useCookies();
 
   const [{ showLoginModal, showRegisterModal, userInfo, isAuthor }, dispatch] =
@@ -39,10 +34,15 @@ function ResponsiveAppBar() {
   const router = useRouter();
 
   const pages = [
-    { routeName: "Books", handler: "/", type: "link" },
-    { routeName: "Read Books", handler: "/read-books", type: "link" },
-    { routeName: "Saved Books", handler: "/saved-books", type: "link" },
-    // { routeName: "Readers", handler: "#", type: "link" },
+    { routeName: "Books", handler: "/" },
+    { routeName: "Read Books", handler: "/books/read" },
+    { routeName: "Saved Books", handler: "/books/saved" },
+  ];
+
+  const settings = [
+    { routeName: "My Books", handler: "/books/my-books" },
+    { routeName: "Account", handler: "/Account" },
+    { routeName: "Logout", handler: "/" },
   ];
 
   const handleLogin = () => {
@@ -99,7 +99,6 @@ function ResponsiveAppBar() {
             }
           );
           let projectedUserInfo = { ...user };
-          console.log("user from navbar", user.image);
           if (user.image) {
             projectedUserInfo = {
               ...projectedUserInfo,
@@ -133,6 +132,7 @@ function ResponsiveAppBar() {
                 noWrap
                 component="a"
                 href="#app-bar-with-responsive-menu"
+                onClick={() => router.push("/")}
                 sx={{
                   mr: 2,
                   display: { xs: "none", md: "flex" },
@@ -177,7 +177,12 @@ function ResponsiveAppBar() {
                 >
                   {pages.map(({ routeName, handler }) => (
                     <MenuItem key={routeName} onClick={handleCloseNavMenu}>
-                      <Typography textAlign="center">{routeName}</Typography>
+                      <Typography
+                        textAlign="center"
+                        onClick={() => router.push(handler)}
+                      >
+                        {routeName}
+                      </Typography>
                     </MenuItem>
                   ))}
                 </Menu>
@@ -238,8 +243,8 @@ function ResponsiveAppBar() {
               <Box sx={{ flexGrow: 0, display: "flex" }}>
                 {userInfo && (
                   <Button
-                    onClick={() => router.push("/add-book")}
                     sx={{ my: 2, color: "white", display: "block" }}
+                    onClick={() => router.push("/books/create")}
                   >
                     Add Book
                   </Button>
@@ -300,9 +305,14 @@ function ResponsiveAppBar() {
                   open={Boolean(anchorElUser)}
                   onClose={handleCloseUserMenu}
                 >
-                  {settings.map((setting) => (
-                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                      <Typography textAlign="center">{setting}</Typography>
+                  {settings.map(({ routeName, handler }) => (
+                    <MenuItem key={routeName} onClick={handleCloseNavMenu}>
+                      <Typography
+                        textAlign="center"
+                        onClick={() => router.push(handler)}
+                      >
+                        {routeName}
+                      </Typography>
                     </MenuItem>
                   ))}
                 </Menu>

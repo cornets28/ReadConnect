@@ -1,5 +1,5 @@
 import { makeStyles } from "@mui/styles";
-import colors from "../../../utils/theme/base/colors";
+import colors from "../../../../utils/theme/base/colors";
 
 const { orange } = colors;
 

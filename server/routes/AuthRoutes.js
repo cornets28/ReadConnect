@@ -1,6 +1,6 @@
 import { Router } from "express";
 import multer from "multer";
-import { signup, login, getUserInfo, setUserInfo, setUserImage } from "../controller/AuthControllers.js";
+import { signup, login, getUserInfo, setUserInfo, setUserImage } from "../controllers/AuthControllers.js";
 import { verifyToken } from '../middlewares/AuthMiddleware.js'
 
 const authRoutes = Router();

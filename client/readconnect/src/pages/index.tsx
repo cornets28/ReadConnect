@@ -1,6 +1,6 @@
 import React, { FC, useState, useEffect } from "react";
 import Page from "@/components/Page/Page";
-import Books from "@/components/Books/Books";
+import Books from "@/components/Books/Books/Books";
 import { useStateProvider } from "../context/StateContext";
 
 import Auth from "@/components/Authentication/Auth/Auth";
