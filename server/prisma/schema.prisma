@@ -18,6 +18,8 @@ model User {
   profileImage String?
   isProfileSet Boolean? @default(false)
   books Books[]
+  savedBooks SavedBooks[]
+  readBooks ReadBooks[]
   createdAt DateTime @default(now())
 }
 
@@ -36,5 +38,26 @@ model Books {
   createdAt DateTime @default(now())
   createdBy User @relation(fields: [userId], references: [id])
   userId Int
+  savedBy SavedBooks[]
+  readBy ReadBooks[]
 }
+
+model SavedBooks {
+  id Int @id @default(autoincrement())
+  book Books @relation(fields: [bookId], references: [id])
+  bookId Int
+  user User @relation(fields: [userId], references: [id])
+  userId Int
+  createdAt DateTime @default(now())
+}
+
+model ReadBooks {
+  id Int @id @default(autoincrement())
+  book Books @relation(fields: [bookId], references: [id])
+  bookId Int
+  user User @relation(fields: [userId], references: [id])
+  userId Int
+  createdAt DateTime @default(now())
+}
+
 

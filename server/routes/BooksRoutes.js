@@ -4,7 +4,8 @@ import {
     getUserAuthBooks,
     getBookData,
     editBook,
-    getBooks
+    getBooks,
+    saveBook
 } from "../controllers/BooksController.js";
 import multer from "multer";
 import { verifyToken } from "../middlewares/AuthMiddleware.js";
@@ -19,7 +20,6 @@ booksRoutes.get("/get-book-data/:bookId", getBookData);
 booksRoutes.put("/edit-book/:bookId", verifyToken, upload.array("images"), editBook);
 booksRoutes.get("/get-all-books", verifyToken, getBooks);
 
-// booksRoutes.post("/mark-as-read/:bookId", verifyToken, markBookAsRead);
-// booksRoutes.post("/mark-as-saved/:bookId", verifyToken, markBookAsSaved)
+booksRoutes.post("/save-book/:bookId", verifyToken, saveBook);
 
 export default booksRoutes;
